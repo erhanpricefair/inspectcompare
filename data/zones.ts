@@ -18,6 +18,7 @@ export const zones: Zone[] = [
   { slug: 'northern-beaches', citySlug: 'sydney', name: 'Northern Beaches', suburbs: ['Manly', 'Dee Why', 'Mona Vale'] },
   { slug: 'sutherland-shire', citySlug: 'sydney', name: 'Sutherland Shire', suburbs: ['Cronulla', 'Sutherland', 'Miranda'] },
   { slug: 'south-west-sydney', citySlug: 'sydney', name: 'South West Sydney', suburbs: ['Liverpool', 'Campbelltown', 'Camden'] },
+  { slug: 'hills-district', citySlug: 'sydney', name: 'Hills District', suburbs: ['Norwest', 'Baulkham Hills', 'Bella Vista', 'Rouse Hill', 'Castle Hill'] },
 
   // Melbourne
   { slug: 'inner-melbourne', citySlug: 'melbourne', name: 'Inner Melbourne', suburbs: ['Carlton', 'Fitzroy', 'South Yarra'] },

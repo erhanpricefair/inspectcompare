@@ -79,6 +79,8 @@ export default function ZonePage({ params }: Props) {
               <p className="mt-1 text-sm text-gray-500">
                 {p.servicesOffered.join(', ')}
                 {p.priceFrom ? ` · From $${p.priceFrom}` : ''}
+                {p.rating ? ` · ${p.rating}★` : ''}
+                {p.reviewsCount ? ` (${p.reviewsCount} reviews)` : ''}
               </p>
             </div>
           ))}
