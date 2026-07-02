@@ -14,24 +14,24 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-AU">
-      <body className="min-h-screen bg-white text-gray-900 antialiased">
-        <header className="border-b border-gray-100">
+      <body className="min-h-screen bg-paper text-ink-800 antialiased">
+        <header className="border-b border-ink-100 bg-white">
           <nav className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
-            <Link href="/" className="text-lg font-semibold text-brand-700">
+            <Link href="/" className="font-display text-lg font-bold text-ink-700">
               InspectCompare
             </Link>
-            <div className="flex gap-6 text-sm text-gray-600">
-              <Link href="/building-pest-inspections/sydney" className="hover:text-brand-600">
+            <div className="flex gap-6 text-sm font-medium text-ink-600">
+              <Link href="/building-pest-inspections/sydney" className="hover:text-rust-500">
                 Find an Inspector
               </Link>
-              <Link href="/guides" className="hover:text-brand-600">
+              <Link href="/guides" className="hover:text-rust-500">
                 Guides
               </Link>
             </div>
           </nav>
         </header>
         <main>{children}</main>
-        <footer className="mt-24 border-t border-gray-100 py-10 text-center text-xs text-gray-400">
+        <footer className="mt-24 border-t border-ink-100 bg-white py-10 text-center text-xs text-ink-400">
           © {new Date().getFullYear()} InspectCompare. Independent comparison site — not a booking
           agent.
         </footer>

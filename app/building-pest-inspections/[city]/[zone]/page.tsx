@@ -4,10 +4,10 @@ import Link from 'next/link';
 import { getCity } from '@/data/cities';
 import { zones, getZone, getZonesForCity } from '@/data/zones';
 import { getProvidersForZone } from '@/data/providers';
+import { ProviderCard } from '@/components/ProviderCard';
 
 type Props = { params: { city: string; zone: string } };
 
-// Pre-render every city/zone combination at build time
 export function generateStaticParams() {
   return zones.map((z) => ({ city: z.citySlug, zone: z.slug }));
 }
@@ -31,84 +31,85 @@ export default function ZonePage({ params }: Props) {
   const otherZones = getZonesForCity(city.slug).filter((z) => z.slug !== zone.slug);
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-12">
-      <nav className="text-xs text-gray-400">
-        <Link href="/">Home</Link> /{' '}
-        <Link href={`/building-pest-inspections/${city.slug}`}>{city.name}</Link> / {zone.name}
-      </nav>
+    <div>
+      <section className="bg-ink-700 text-white">
+        <div className="mx-auto max-w-5xl px-4 py-14">
+          <nav className="text-xs text-ink-100">
+            <Link href="/" className="hover:text-white">Home</Link> /{' '}
+            <Link href={`/building-pest-inspections/${city.slug}`} className="hover:text-white">
+              {city.name}
+            </Link>{' '}
+            / {zone.name}
+          </nav>
 
-      <h1 className="mt-3 text-3xl font-bold tracking-tight text-brand-700">
-        Building &amp; Pest Inspections in {zone.name}, {city.name}
-      </h1>
+          <h1 className="mt-3 font-display text-3xl font-bold">
+            Building &amp; Pest Inspections in {zone.name}, {city.name}
+          </h1>
 
-      <p className="mt-4 text-sm text-gray-500">
-        Covering {zone.suburbs.join(', ')} and surrounding areas.
-      </p>
+          <p className="mt-3 text-ink-100">
+            Covering {zone.suburbs.join(', ')} and surrounding areas.
+          </p>
 
-      <p className="mt-4 max-w-3xl text-gray-700">
-        Typical combined inspection cost across {city.name}: ${city.priceLow}–${city.priceHigh}.
-        See the full{' '}
-        <Link href={`/building-pest-inspections/${city.slug}`} className="text-brand-600 underline">
-          {city.name} city guide
-        </Link>{' '}
-        for wider pricing context.
-      </p>
-
-      <h2 className="mt-10 text-xl font-semibold">Inspectors serving {zone.name}</h2>
-
-      {zoneProviders.length === 0 ? (
-        <p className="mt-4 rounded-md border border-dashed border-gray-300 p-6 text-sm text-gray-500">
-          We're still vetting inspectors specifically for {zone.name}. See the full list for{' '}
-          <Link href={`/building-pest-inspections/${city.slug}`} className="text-brand-600 underline">
-            {city.name}
-          </Link>{' '}
-          in the meantime.
-        </p>
-      ) : (
-        <div className="mt-4 space-y-4">
-          {zoneProviders.map((p) => (
-            <div key={p.id} className="rounded-lg border border-gray-200 p-5">
-              <div className="flex items-center justify-between">
-                <h3 className="font-semibold">{p.name}</h3>
-                {p.featured && (
-                  <span className="rounded bg-brand-100 px-2 py-0.5 text-xs font-medium text-brand-700">
-                    Featured
-                  </span>
-                )}
-              </div>
-              <p className="mt-1 text-sm text-gray-500">
-                {p.servicesOffered.join(', ')}
-                {p.priceFrom ? ` · From $${p.priceFrom}` : ''}
-                {p.rating ? ` · ${p.rating}★` : ''}
-                {p.reviewsCount ? ` (${p.reviewsCount} reviews)` : ''}
-              </p>
-            </div>
-          ))}
+          <div className="mt-6 inline-flex items-baseline gap-2 rounded-md bg-rust-500 px-4 py-2">
+            <span className="font-display text-lg font-bold">
+              ${city.priceLow}–${city.priceHigh}
+            </span>
+            <span className="text-sm text-white/90">typical cost across {city.name}</span>
+          </div>
         </div>
-      )}
+      </section>
 
-      {otherZones.length > 0 && (
-        <>
-          <h2 className="mt-12 text-lg font-semibold">Other areas of {city.name}</h2>
-          <div className="mt-4 flex flex-wrap gap-2">
-            {otherZones.map((z) => (
-              <Link
-                key={z.slug}
-                href={`/building-pest-inspections/${city.slug}/${z.slug}`}
-                className="rounded-full border border-gray-200 px-3 py-1 text-xs text-gray-600 hover:border-brand-500 hover:text-brand-600"
-              >
-                {z.name}
-              </Link>
+      <div className="mx-auto max-w-5xl px-4 py-12">
+        <h2 className="font-display text-xl font-bold text-ink-800">
+          Inspectors serving {zone.name}
+        </h2>
+
+        {zoneProviders.length === 0 ? (
+          <p className="mt-4 rounded-md border border-dashed border-ink-100 bg-white p-6 text-sm text-ink-400">
+            We're still vetting inspectors specifically for {zone.name}. See the full list for{' '}
+            <Link
+              href={`/building-pest-inspections/${city.slug}`}
+              className="text-rust-500 underline"
+            >
+              {city.name}
+            </Link>{' '}
+            in the meantime.
+          </p>
+        ) : (
+          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            {zoneProviders.map((p) => (
+              <ProviderCard key={p.id} provider={p} />
             ))}
           </div>
-        </>
-      )}
+        )}
 
-      <div className="mt-12 rounded-lg border border-gray-100 bg-gray-50 p-6">
-        <h2 className="text-lg font-semibold">Are you an inspector serving {zone.name}?</h2>
-        <p className="mt-2 text-sm text-gray-600">
-          Get listed on this page. [Provider submission form / contact link goes here]
-        </p>
+        {otherZones.length > 0 && (
+          <>
+            <h2 className="mt-14 font-display text-lg font-bold text-ink-800">
+              Other areas of {city.name}
+            </h2>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {otherZones.map((z) => (
+                <Link
+                  key={z.slug}
+                  href={`/building-pest-inspections/${city.slug}/${z.slug}`}
+                  className="rounded-full border border-ink-100 bg-white px-3 py-1 text-xs font-medium text-ink-600 transition hover:border-rust-500 hover:text-rust-500"
+                >
+                  {z.name}
+                </Link>
+              ))}
+            </div>
+          </>
+        )}
+
+        <div className="mt-14 rounded-lg border border-ink-100 bg-sand p-6">
+          <h2 className="font-display text-lg font-bold text-ink-800">
+            Are you an inspector serving {zone.name}?
+          </h2>
+          <p className="mt-2 text-sm text-ink-600">
+            Get listed on this page. [Provider submission form / contact link goes here]
+          </p>
+        </div>
       </div>
     </div>
   );

@@ -20,16 +20,22 @@ export default function GuidePage({ params }: Props) {
   if (!guide) return notFound();
 
   return (
-    <article className="mx-auto max-w-3xl px-4 py-12">
-      <nav className="text-xs text-gray-400">
-        <Link href="/">Home</Link> / <Link href="/guides">Guides</Link> / {guide.title}
-      </nav>
-      <h1 className="mt-3 text-3xl font-bold tracking-tight text-brand-700">{guide.title}</h1>
-      <p className="mt-3 text-gray-600">{guide.description}</p>
+    <article>
+      <section className="bg-ink-700 text-white">
+        <div className="mx-auto max-w-3xl px-4 py-14">
+          <nav className="text-xs text-ink-100">
+            <Link href="/" className="hover:text-white">Home</Link> /{' '}
+            <Link href="/guides" className="hover:text-white">Guides</Link> / {guide.title}
+          </nav>
+          <h1 className="mt-3 font-display text-3xl font-bold">{guide.title}</h1>
+          <p className="mt-3 text-ink-100">{guide.description}</p>
+        </div>
+      </section>
 
-      {/* Article body placeholder — replace with real content once drafted */}
-      <div className="mt-8 rounded-md border border-dashed border-gray-300 p-6 text-sm text-gray-500">
-        Content not yet written — status: {guide.status}
+      <div className="mx-auto max-w-3xl px-4 py-12">
+        <div className="rounded-md border border-dashed border-ink-100 bg-white p-6 text-sm text-ink-400">
+          Content not yet written — status: {guide.status}
+        </div>
       </div>
     </article>
   );
